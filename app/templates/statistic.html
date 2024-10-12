@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Статистика{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="my-4">Статистика</h1>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="user-logs-tab" data-bs-toggle="tab" data-bs-target="#user-logs" type="button" role="tab" aria-controls="user-logs" aria-selected="true">Журнал действий пользователей</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="book-stats-tab" data-bs-toggle="tab" data-bs-target="#book-stats" type="button" role="tab" aria-controls="book-stats" aria-selected="false">Статистика просмотра книг</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="user-logs" role="tabpanel" aria-labelledby="user-logs-tab">
+            <div class="mt-3">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>ФИО пользователя</th>
+                            <th>Название книги</th>
+                            <th>Дата и время просмотра</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for view in paginated_users %}
+                        <tr>
+                            <td>{{ view.id}}</td>
+                            <td>{{ view.user.last_name }} {{ view.user.first_name }} {{ view.user.middle_name }}</td>
+                            <td>{{ view.book.title }}</td>
+                            <td>{{ view.view_date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <nav aria-label="Навигация">
+                <ul class="pagination justify-content-center my-4">
+                    {% if user_views_page > 1 %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('main.statistic', user_views_page=user_views_page-1) }}">ᐊ</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">ᐊ</a>
+                    </li>
+                    {% endif %}
+        
+                    {% for p in range(1, user_total_pages + 1) %}
+                    <li class="page-item {% if p == user_views_page %}active{% endif %}">
+                        <a class="page-link" href="{{ url_for('main.statistic', user_views_page=p) }}">{{ p }}</a>
+                    </li>
+                    {% endfor %}
+        
+                    {% if user_views_page < user_total_pages %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('main.statistic', user_views_page=user_views_page+1) }}">ᐅ</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">ᐅ</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        <div class="tab-panel fade" id="book-stats" role="tabpanel" aria-labelledby="book-stats-tab">
+            <div class="mt-3">
+                <form method="POST" class="my-4">
+                    <div class="form-group row">
+                        <label for="date_from" class="col-form-label">Дата с:</label>
+                        <div class="col-md-2">
+                            <input type="date" name="date_from" class="form-control" placeholder="Дата от" value="{{ request.form.date_from }}">
+                        </div>
+                        <label for="date_to" class="col-form-label">Дата до:</label>
+                        <div class="col-md-2">
+                            <input type="date" name="date_to" class="form-control" placeholder="Дата до" value="{{ request.form.date_to }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-12 text-right mt-3">
+                            <button type="submit" class="btn btn-primary">Применить</button>
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Название книги</th>
+                            <th>Количество просмотров</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in paginated_books %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ book.title }}</td>
+                            <td>{{ book.view_count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <nav aria-label="Навигация">
+                <ul class="pagination justify-content-center my-4">
+                    {% if book_stats_page > 1 %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('main.statistic', book_stats_page=book_stats_page-1) }}">ᐊ</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">ᐊ</a>
+                    </li>
+                    {% endif %}
+        
+                    {% for p in range(1, book_total_pages + 1) %}
+                    <li class="page-item {% if p == book_stats_page %}active{% endif %}">
+                        <a class="page-link" href="{{ url_for('main.statistic', book_stats_page=p) }}">{{ p }}</a>
+                    </li>
+                    {% endfor %}
+        
+                    {% if book_stats_page < book_total_pages %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('main.statistic', book_stats_page=book_stats_page+1) }}">ᐅ</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">ᐅ</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}

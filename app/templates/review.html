@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Рецензия{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Текст рецензии</h2>
+    {% if mode == 'edit' %}
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('main.review') }}">
+        <div class="mb-3">
+            <textarea class="form-control" id="description_area" name="review" rows="5" required></textarea>
+        </div>
+        <div class="mb-3">
+            <h2>Оценка: </h2>
+            <div class="btn-group" role="group">
+
+                <input type="radio" class="btn-check" id="star5" name="rating" value="5" checked />
+                <label for="star5" class="btn btn-outline-primary" title="Отлично">Отлично</label>
+
+                <input type="radio" class="btn-check" id="star4" name="rating" value="4" />
+                <label for="star4" class="btn btn-outline-primary" title="Хорошо">Хорошо</label>
+
+                <input type="radio" class="btn-check" id="star3" name="rating" value="3" />
+                <label for="star3" class="btn btn-outline-primary" title="Удовлетворительно">Удовлетворительно</label>
+
+                <input type="radio" class="btn-check" id="star2" name="rating" value="2" />
+                <label for="star2" class="btn btn-outline-primary"
+                    title="Неудовлетворительно">Неудовлетворительно</label>
+
+                <input type="radio" class="btn-check" id="star1" name="rating" value="1" />
+                <label for="star1" class="btn btn-outline-primary" title="Плохо">Плохо</label>
+
+                <input type="radio" class="btn-check" id="star0" name="rating" value="0" />
+                <label for="star0" class="btn btn-outline-primary" title="Ужасно">Ужасно</label>
+            </div>
+        </div>
+
+        <input type="hidden" name="book_id" value="{{request.args.get('book_id')}}" required>
+
+        <div class="mb-3">
+            <button type="submit" id="submit_button" class="btn btn-primary">Сохранить отзыв</button>
+        </div>
+    </form>
+    {% elif mode == 'view' %}
+    <div class="mb-3">
+        <textarea class="form-control" id="description_area" rows="5" readonly>{{ review.review_text }}</textarea>
+    </div>
+    <div class="mb-3">
+        <h2>Оценка: </h2>
+        <p>{{ review.rating }}</p>
+    </div>
+    {% endif %}
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/easy_mde.css')}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+<script src="{{ url_for('static', filename ='js/description_mde.js') }}"></script>
+
+{% endblock %}

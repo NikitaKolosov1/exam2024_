@@ -1,0 +1,57 @@
+.EasyMDEContainer .CodeMirror {
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
+  }
+  
+  .EasyMDEContainer .CodeMirror-gutters {
+    background-color: var(--bs-body-bg);
+    border-right: 1px solid var(--bs-border-color);
+  }
+  
+  .EasyMDEContainer .CodeMirror-linenumber {
+    color: var(--bs-secondary-color);
+  }
+  
+  .EasyMDEContainer .CodeMirror-cursor {
+    border-left: 1px solid var(--bs-body-color);
+  }
+  
+  .EasyMDEContainer .CodeMirror-selected,
+  .EasyMDEContainer .CodeMirror-selectedtext {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary-text);
+  }
+  
+  .EasyMDEContainer .editor-toolbar {
+    background-color: var(--bs-secondary-bg) !important; 
+    border-color: var(--bs-border-color);
+  }
+  
+  .EasyMDEContainer .editor-toolbar button {
+    color: var(--bs-body-color) !important;
+  }
+
+  .editor-toolbar button.active{
+    background: none !important;
+  }
+  
+  .EasyMDEContainer .editor-toolbar button:hover {
+    background-color: var(--bs-primary-bg-subtle)!important;
+  }
+  
+  .EasyMDEContainer .editor-statusbar {
+    background-color: transparent;
+    color: var(--bs-secondary-color);
+  }
+  .EasyMDEContainer .editor-preview {
+    background-color: var(--bs-body-bg);
+    color: var(--bs-secondary-color);
+    border: none;
+  }
+  .editor-preview pre{
+    background: var(--bs-body-bg) !important;
+  }
+
+
+

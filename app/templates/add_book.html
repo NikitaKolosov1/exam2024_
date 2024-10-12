@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Добавить новую книгу{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Добавить новую книгу</h2>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('main.addbook') }}">
+        <div class="mb-3">
+            <label for="title" class="form-label">Название</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="description" class="form-label">Описание</label>
+            <textarea class="form-control" id="description_area" name="description" rows="5" required></textarea>
+        </div>
+        
+        <div class="mb-3">
+            <label for="year" class="form-label">Год</label>
+            <input type="number" class="form-control" id="year" name="year" min="1000" max="9999" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="publisher" class="form-label">Издательство</label>
+            <input type="text" class="form-control" id="publisher" name="publisher" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="author" class="form-label">Автор</label>
+            <input type="text" class="form-control" id="author" name="author" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="pages" class="form-label">Объём (в страницах)</label>
+            <input type="number" class="form-control" id="pages" name="pages" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="cover" class="form-label">Обложка</label>
+            <input type="file" class="form-control" id="cover" name="cover" accept="image/*" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="genres" class="form-label">Жанры</label>
+            <select class="form-select form-select-lg mb-3" id="genres" name="genres" multiple required>
+                {% for genre in genres %}
+                <option value="{{ genre.id }}">{{ genre.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <button type="submit" id="submit_button" class="btn btn-primary">Добавить книгу</button>
+        </div>
+    </form>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/easy_mde.css')}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+<script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+<script src="{{ url_for('static', filename ='js/description_mde.js') }}"></script>
+
+{% endblock %}
