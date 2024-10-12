@@ -149,7 +149,6 @@ class UserView(db.Model):
             UserView.view_date < today_end
         ).count()
 
-        if view_count < 10:
             new_view = UserView(user_id=user_id, book_id=book_id)
             db.session.add(new_view)
             db.session.commit()
